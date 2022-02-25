@@ -1,0 +1,34 @@
+title: Julianic Exam
+date: 2022-02-25
+
+bonus: 
+  available: true
+  system: increment_grade
+
+tasks:
+  - id: 1
+    max_points: 5
+
+  - id: 2
+    max_points: 2
+
+grades:
+  - grade: 1.0
+    passed: true
+    min_points: 7
+
+  - grade: 1.3
+    passed: true
+    min_points: 6
+  
+  - grade: 1.7
+    passed: true
+    min_points: 5.5
+  
+  - grade: 2.0
+    passed: true
+    min_points: 3.5
+  
+  - grade: 5.0
+    passed: false 
+    min_points: 0

@@ -6,11 +6,12 @@ using YAML
 using Plots
 using DataStructures
 
-
 export read_exam
 export read_grading
 export evaluate
 
+ # for half points Float64 is exact!
+const MyFixedPointNumber = Float64
 
 include("bonus.jl")
 include("plotting.jl")
@@ -38,7 +39,7 @@ end
 Read the `.csv` file with the results of the exam.
 """
 function read_grading(path)
-    CSV.read(path, DataFrame)
+    CSV.read(path, DataFrame)#, types=Dict(1 =>String, 2=> Int, 3=> Bool, 4 => Float16))
 end 
 
 function calculate_total_points!(results, exam)
@@ -55,7 +56,7 @@ function calculate_grades!(results, exam)
 
     # calculate a grade according to the grading scheme
     grades = map(total_points) do p
-        grade = last(exam["grades"])["grade"] 
+        grade = MyFixedPointNumber(last(exam["grades"])["grade"])
         best_points = last(exam["grades"])["min_points"] 
         
         for g in exam["grades"]
@@ -69,7 +70,7 @@ function calculate_grades!(results, exam)
 
     if exam["bonus"]["available"]
         if exam["bonus"]["system"] == "increment_grade"
-            increment_grade(grades, results[:, :bonus], exam)
+            grades = increment_grade(grades, results[:, :bonus], exam)
         end
     end
     
@@ -86,16 +87,22 @@ end
 * `histogram=true`: export grade histogram  
 * `anonymize=false`: remove names and only print id
 
+
 """
 function evaluate(results_path, exam_path;
                     histogram=true,
-                    dataframe=true,
-                    anonymize=false
+                    anonymize=false,
+                    dump_results_CSV=true,
                 )
 
 
     exam = read_exam(exam_path)
     results = read_grading(results_path)
+
+    for i in 1:length(exam["grades"])
+        exam["grades"][i]["grade"] = MyFixedPointNumber(exam["grades"][i]["grade"])
+    end
+
 
 
     # calculate points and insert into dataframe
@@ -112,8 +119,12 @@ function evaluate(results_path, exam_path;
         select!(results, Not(:name)) 
     end
 
-    @show results
-    return nothing 
+
+    if dump_results_CSV
+        CSV.write("results_debug.csv", results)
+    end
+
+    return results 
 end
 
 end # module
