@@ -4,7 +4,7 @@ Counting points and grades with Julia
 
 | **Build Status**                          | **Code Coverage**               |
 |:-----------------------------------------:|:-------------------------------:|
-[![][docs-dev-img]][docs-dev-url] | [![][CI-img]][CI-url] | [![][codecov-img]][codecov-url] |
+| [![][CI-img]][CI-url] | [![][codecov-img]][codecov-url] |
 
 
 ## Features
