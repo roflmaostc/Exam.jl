@@ -80,7 +80,8 @@ julia> evaluate("test/simple_results.csv", "test/simple_exam.yml")
 ```
 
 Further, the following histogram is generated:
-![](examples/Julianic Exam_grade_histogram.png)
+
+![](https://github.com/roflmaostc/Exam.jl/blob/main/examples/Julianic%20Exam_grade_histogram.png)
 
 
 
