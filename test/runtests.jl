@@ -17,11 +17,11 @@ end
 
 @testset  begin
     correct_results = CSV.read("simple_test_output.csv", DataFrame)
-    results = evaluate("simple_results.csv", "test/simple_exam.yml")
+    results = evaluate("simple_results.csv", "simple_exam.yml", histogram=false)
     @test results == correct_results
     
     correct_results = CSV.read("simple_test_output_anonymous.csv", DataFrame)
-    results = evaluate("simple_results.csv", "test/simple_exam.yml", anonymize=true)
+    results = evaluate("simple_results.csv", "simple_exam.yml", anonymize=true, histogram=false)
     @test results == correct_results
 
 end
