@@ -1,3 +1,8 @@
+"""
+    increment_grade(grades, bonuses, exam)
+
+One way of apply a bonus. We simply increment the grade by one level.
+"""
 function increment_grade(grades, bonuses, exam)
     grades = get_grades(exam) 
 

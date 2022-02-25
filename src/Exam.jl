@@ -3,10 +3,8 @@ module Exam
 using DataFrames
 using CSV
 using YAML
-using FixedPointNumbers
 using Plots
 using DataStructures
-
 
 
 export read_exam
@@ -85,9 +83,8 @@ end
 
 
 # Keywords and default values
-* `histogram=true`
-* `dataframe=true`
-* `anonymize=false`
+* `histogram=true`: export grade histogram  
+* `anonymize=false`: remove names and only print id
 
 """
 function evaluate(results_path, exam_path;
@@ -101,11 +98,18 @@ function evaluate(results_path, exam_path;
     results = read_grading(results_path)
 
 
+    # calculate points and insert into dataframe
     calculate_total_points!(results, exam)
+    # insert grades into table
     calculate_grades!(results, exam)
 
+    # plot histogram
     if histogram
         grade_histogram(results, exam)
+    end
+
+    if anonymize
+        select!(results, Not(:name)) 
     end
 
     @show results
